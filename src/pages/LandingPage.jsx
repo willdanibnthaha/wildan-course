@@ -4,7 +4,7 @@ import Hero from '../components/Hero';
 import Community from '../components/Community';
 import Pricing from '../components/Pricing';
 import Footer from '../components/Footer';
-import PaymentModal from '../components/PaymentModal';
+import PaymentModal from '../components/ModalBayar';
 
 const LandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
