@@ -7,25 +7,31 @@ const PaymentModal = ({ plan, onClose }) => {
     bank: 'SeaBank',
     accountNumber: '901912153730',
     accountName: 'Wildan',
-    adminWA: '6285603768556'
+    adminWA: '6285603768556' // Wajib format 62 di depan
   };
 
-  // Fungsi Copy
+  // Fungsi Copy Rekening
   const copyToClipboard = () => {
     navigator.clipboard.writeText(paymentInfo.accountNumber);
     alert('Nomor rekening berhasil disalin!'); 
   };
 
-  // Fungsi Konfirmasi WA
+  // Fungsi Konfirmasi WA (Format API Resmi)
   const handleWhatsAppConfirm = () => {
+    // Format harga jadi Rupiah (Rp 50.000)
     const formattedPrice = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR',
       maximumFractionDigits: 0
     }).format(plan?.price || 0);
 
-    const message = `Halo Admin, saya sudah transfer ${formattedPrice} untuk paket ${plan?.title || 'Premium'}. Mohon diproses.`;
-    const whatsappUrl = `https://wa.me/${paymentInfo.adminWA}?text=${encodeURIComponent(message)}`;
+    // Isi Pesan Otomatis
+    const message = `Halo Admin Wildan, saya sudah transfer ${formattedPrice} untuk paket ${plan?.title || 'Premium'}. Mohon diproses.`;
+    
+    // Link Sakti (api.whatsapp.com) untuk Android
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${paymentInfo.adminWA}&text=${encodeURIComponent(message)}`;
+    
+    // Buka di tab baru
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -52,7 +58,7 @@ const PaymentModal = ({ plan, onClose }) => {
           </button>
         </div>
 
-        {/* KARTU INFO BANK (YANG RUSAK KITA PERBAIKI DISINI) */}
+        {/* KARTU INFO BANK */}
         <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 mb-6">
           
           {/* Nama Bank */}
@@ -66,7 +72,7 @@ const PaymentModal = ({ plan, onClose }) => {
             </div>
           </div>
 
-          {/* Kotak Nomor Rekening (Sudah Rapi) */}
+          {/* Kotak Nomor Rekening */}
           <div className="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between mb-3 shadow-sm">
             <div>
               <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold mb-1">Nomor Rekening</p>
@@ -95,7 +101,7 @@ const PaymentModal = ({ plan, onClose }) => {
           </div>
         </div>
 
-        {/* FOOTER & TOMBOL (Sudah tidak mepet bawah) */}
+        {/* FOOTER & TOMBOL */}
         <div className="border-t border-dashed border-slate-200 py-4 mb-2">
           <div className="flex justify-between text-sm items-center mb-4">
             <span className="text-slate-500">Total Tagihan</span>
